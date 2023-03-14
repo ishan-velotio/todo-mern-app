@@ -1,4 +1,4 @@
-
+// const db = require("./");
 
 module.exports = (sequelize, Sequelize) => {
     const User = sequelize.define("users", {
@@ -17,14 +17,6 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING
       }
     });
-
-    User.associate = function(models) {
-        // associations can be defined here
-        User.hasOne(models.userpermissions, {
-          foreignKey: 'userid',
-          as: 'userpermission'
-        });
-      };
   
     return User;
   };

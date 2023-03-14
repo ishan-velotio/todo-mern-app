@@ -6,7 +6,7 @@ module.exports = (sequelize, Sequelize) => {
        autoIncrement: true
       },
       userid: {
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER
       },
       isadmin: {
         type: Sequelize.BOOLEAN
@@ -15,6 +15,14 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.JSON
       }
     });
+
+    UserPermission.associate = function(models) {
+      // associations can be defined here
+      UserPermission.belongsTo(models.User, {
+        foreignKey: 'userid',
+        as: 'userpermissions'
+      });
+    };
   
     return UserPermission;
   };
