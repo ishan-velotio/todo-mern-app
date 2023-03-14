@@ -1,7 +1,9 @@
 import React from "react";
 import Tasks from "./Tasks";
+import Auth from "./Auth";
 import { Paper, TextField } from "@material-ui/core";
 import { Checkbox, Button } from "@material-ui/core";
+import { BrowserRouter, Routes, Route } from "react-router-dom"
 import "./App.css";
 
 class App extends Tasks {
@@ -38,12 +40,12 @@ class App extends Tasks {
                     <div>
                         {tasks.map((task) => (
                             <Paper
-                                key={task._id}
+                                key={task.id}
                                 className="flex task_container"
                             >
                                 <Checkbox
                                     checked={task.completed}
-                                    onClick={() => this.handleUpdate(task._id)}
+                                    onClick={() => this.handleUpdate(task.id)}
                                     color="primary"
                                 />
                                 <div
@@ -56,7 +58,7 @@ class App extends Tasks {
                                     {task.task}
                                 </div>
                                 <Button
-                                    onClick={() => this.handleDelete(task._id)}
+                                    onClick={() => this.handleDelete(task.id)}
                                     color="secondary"
                                 >
                                     delete
@@ -69,5 +71,16 @@ class App extends Tasks {
         );
     }
 }
+
+
+function App1() {
+    return (
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Auth />} />
+        </Routes>
+      </BrowserRouter>
+    )
+  }
 
 export default App;
