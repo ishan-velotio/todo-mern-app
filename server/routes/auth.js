@@ -101,7 +101,7 @@ router.post("/", async (req, res) => {
         res.send({
             email: user.email,
             isAdmin: permission.isAdmin,
-            taskACL: [permission.taskacl],
+            taskACL: [permission.taskACL],
             token
         });
     } catch (error) {
