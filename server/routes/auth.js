@@ -23,15 +23,17 @@ router.post("/", async (req, res) => {
 
 
 
-        console.log('user - ', user.id);
 
         if (!user) {
-            res.status(400).send({message: 'Invalid User'});
+            return res.status(400).send({ message: 'Invalid User' });
         }
+
+        console.log('user - ', user.id);
+
 
         const permission = await UserPermission.findOne({
             where: {
-                userid: user.id,
+                userid: user.id.toString(),
             },
         });
 
@@ -48,7 +50,12 @@ router.post("/", async (req, res) => {
         }, JWT_SECRET);
 
 
-        res.send({token});
+        res.send({
+            email: user.email,
+            isAdmin: permission.isadmin,
+            taskACL: permission.taskacl,
+            token
+        });
     } catch (error) {
         console.log(error)
         res.send(error);
