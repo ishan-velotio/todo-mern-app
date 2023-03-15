@@ -11,7 +11,7 @@ class Tasks extends Component {
     async componentDidMount() {
         try {
             console.log(this.state);
-            const { data } = await getTasks();
+            const { data } = await getTasks(this.state.user.user.token);
             console.log('data - ', data);
             this.setState({ tasks: data });
         } catch (error) {
@@ -27,7 +27,7 @@ class Tasks extends Component {
         e.preventDefault();
         const originalTasks = this.state.tasks;
         try {
-            const { data } = await addTask({ task: this.state.currentTask });
+            const { data } = await addTask({ task: this.state.currentTask }, this.state.user.user.token);
             const tasks = originalTasks;
             tasks.push(data);
             this.setState({ tasks, currentTask: "" });
@@ -61,7 +61,7 @@ class Tasks extends Component {
             const tasks = originalTasks.filter(
                 (task) => task.id !== currentTask
             );
-            this.setState({ tasks });
+            this.setState({ tasks }, this.state.user.user.token);
             await deleteTask(currentTask);
         } catch (error) {
             this.setState({ tasks: originalTasks });
