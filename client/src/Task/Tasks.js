@@ -4,13 +4,13 @@ import {
     getTasks,
     updateTask,
     deleteTask,
-} from "./services/taskServices";
+} from "../services/taskServices";
 
 class Tasks extends Component {
-    state = { tasks: [], currentTask: "" };
 
     async componentDidMount() {
         try {
+            console.log(this.state);
             const { data } = await getTasks();
             console.log('data - ', data);
             this.setState({ tasks: data });
