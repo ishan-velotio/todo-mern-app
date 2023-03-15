@@ -1,86 +1,38 @@
-import React from "react";
-import Tasks from "./Tasks";
+import React, { useState } from "react";
 import Auth from "./Auth";
-import { Paper, TextField } from "@material-ui/core";
-import { Checkbox, Button } from "@material-ui/core";
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 import "./App.css";
+import TaskPage from "./Task/TaskPage";
 
-class App extends Tasks {
-    state = { tasks: [], currentTask: "" };
-    render() {
-        const { tasks } = this.state;
-        return (
-            <div className="App flex">
-                <Paper elevation={3} className="container">
-                    <div className="heading">TO-DO</div>
-                    <form
-                        onSubmit={this.handleSubmit}
-                        className="flex"
-                        style={{ margin: "15px 0" }}
-                    >
-                        <TextField
-                            variant="outlined"
-                            size="small"
-                            style={{ width: "80%" }}
-                            value={this.state.currentTask}
-                            required={true}
-                            onChange={this.handleChange}
-                            placeholder="Add New TO-DO"
-                        />
-                        <Button
-                            style={{ height: "40px" }}
-                            color="primary"
-                            variant="outlined"
-                            type="submit"
-                        >
-                            Add task
-                        </Button>
-                    </form>
-                    <div>
-                        {tasks.map((task) => (
-                            <Paper
-                                key={task.id}
-                                className="flex task_container"
-                            >
-                                <Checkbox
-                                    checked={task.completed}
-                                    onClick={() => this.handleUpdate(task.id)}
-                                    color="primary"
-                                />
-                                <div
-                                    className={
-                                        task.completed
-                                            ? "task line_through"
-                                            : "task"
-                                    }
-                                >
-                                    {task.task}
-                                </div>
-                                <Button
-                                    onClick={() => this.handleDelete(task.id)}
-                                    color="secondary"
-                                >
-                                    delete
-                                </Button>
-                            </Paper>
-                        ))}
-                    </div>
-                </Paper>
-            </div>
-        );
-    }
+
+
+const initilizeState = {
+	user: null,
+	isLogin: false,
+	permissions: {
+		readAccess: false,
+		writeAccess: false,
+		deleteAccess: false
+	}
 }
+const App = () => {
+	const [user, setUser] = useState(initilizeState);
+
+	return (
+		<BrowserRouter>
+			<Routes>
+				{
+					user.isLogin
+						? <Route path="/" element={<TaskPage user={user} />} />
+						: (<Route path="" element={<Navigate to="/login" />} />)
+				}
+
+				<Route path="/login" element={<Auth setUser={setUser} />} />
 
 
-function App1() {
-    return (
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Auth />} />
-        </Routes>
-      </BrowserRouter>
-    )
-  }
+			</Routes>
+		</BrowserRouter>
+	)
+}
 
 export default App;
