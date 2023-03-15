@@ -1,7 +1,5 @@
-// const db = require("./");
-
 module.exports = (sequelize, Sequelize) => {
-    const User = sequelize.define("users", {
+    const Group = sequelize.define("groups", {
       id: {
        type: Sequelize.INTEGER,
        primaryKey: true,
@@ -10,16 +8,10 @@ module.exports = (sequelize, Sequelize) => {
       name: {
         type: Sequelize.STRING
       },
-      email: {
-        type: Sequelize.STRING
-      },
-      password: {
-        type: Sequelize.STRING
-      },
       roleid: {
         type: Sequelize.INTEGER
       }
     });
   
-    return User;
+    return Group;
   };
