@@ -46,10 +46,9 @@ router.post("/", async (req, res) => {
         });
 
 
-        console.log('user - ', user.id);
 
         if (!user) {
-            res.status(400).send({message: 'Invalid User'});
+            return res.status(400).send({ message: 'Invalid User' });
         }
 
         const userGroups = await UserGroups.findAll({
@@ -99,7 +98,12 @@ router.post("/", async (req, res) => {
         }, JWT_SECRET);
 
 
-        res.send({token});
+        res.send({
+            email: user.email,
+            isAdmin: permission.isAdmin,
+            taskACL: [permission.taskacl],
+            token
+        });
     } catch (error) {
         console.log(error)
         res.send(error);
