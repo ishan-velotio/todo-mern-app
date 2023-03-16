@@ -48,7 +48,7 @@ class Tasks extends Component {
             this.setState({ tasks });
             await updateTask(currentTask, {
                 completed: tasks[index].completed,
-            });
+            }, this.state.user.user.token);
         } catch (error) {
             this.setState({ tasks: originalTasks });
             console.log(error);
@@ -61,8 +61,8 @@ class Tasks extends Component {
             const tasks = originalTasks.filter(
                 (task) => task.id !== currentTask
             );
-            this.setState({ tasks }, this.state.user.user.token);
-            await deleteTask(currentTask);
+            this.setState({ tasks });
+            await deleteTask(currentTask, this.state.user.user.token);
         } catch (error) {
             this.setState({ tasks: originalTasks });
             console.log(error);
